@@ -5,13 +5,14 @@ services:
         image: influxdb:latest
         container_name: influxdb
         env_file: docker.env
+        user: "ContainerAdministrator" # Use this for Windows, it provides elevated privileges
         ports:
             - '8086:8086'
         volumes:
             - ./certs/influxdb:/etc/ssl/influxdb
             - influxdb_data:/var/lib/influxdb
         networks:
-            - "iotstack"
+            - iotstack
 
     mosquitto:
         image: eclipse-mosquitto:latest
@@ -24,12 +25,12 @@ services:
             - ./mosquitto/config:/mosquitto/config
             - ./mosquitto/log:/mosquitto/log
             - ./mosquitto/data:/mosquitto/data
-        user: "${USER_ID}:${GRP_ID}"
+        user: "ContainerAdministrator" # Use this for Windows, it provides elevated privileges
         links:
             - telegraf
         restart: always
         networks:
-            - "iotstack"
+            - iotstack
 
     telegraf:
         image: telegraf:latest
@@ -39,7 +40,7 @@ services:
         depends_on:
             - influxdb
         env_file: docker.env
-        user: "888"
+        user: "ContainerAdministrator" # Use this for Windows, it provides elevated privileges
         ports:
             - '8125:8125'
         restart: always
@@ -47,13 +48,13 @@ services:
             - ./certs/telegraf:/etc/telegraf
             - ./telegraf/telegraf.toml:/etc/telegraf/telegraf.conf:ro
         networks:
-            - "iotstack"
+            - iotstack
 
     grafana:
         image: grafana/grafana:latest
         container_name: grafana
         env_file: docker.env
-        user: "472"
+        user: "ContainerAdministrator" # Use this for Windows, it provides elevated privileges
         ports:
             - '3000:3000'
         links:
@@ -62,8 +63,7 @@ services:
             - grafana_data:/var/lib/grafana
             - ./certs/grafana:/etc/ssl/certs
         networks:
-            - "iotstack"
-
+            - iotstack
 
 volumes:
     influxdb_data:
