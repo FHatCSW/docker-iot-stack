@@ -64,19 +64,6 @@ services:
         networks:
             - "iotstack"
 
-    opc-client:
-        build: opc
-        container_name: opc-client
-        restart: always
-        volumes:
-            - ./certs/opc:/app/certs
-        links:
-            - telegraf
-        ports:
-            - "8000:8000"
-        networks:
-            - "iotstack"
-
 
 volumes:
     influxdb_data:
