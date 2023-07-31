@@ -8,7 +8,6 @@ services:
         ports:
             - '8086:8086'
         volumes:
-            - ./certs/influxdb:/etc/ssl/influxdb
             - influxdb_data:/var/lib/influxdb
         networks:
             - iotstack
@@ -20,10 +19,10 @@ services:
             - '8883:8883'
             - '8884:8884'
         volumes:
-            - ./certs/mqtt:/mosquitto/config/certs
-            - ./mosquitto/config:/mosquitto/config
-            - ./mosquitto/log:/mosquitto/log
-            - ./mosquitto/data:/mosquitto/data
+            - .\certs\mqtt:/mosquitto/config/certs
+            - .\mosquitto\config:/mosquitto/config
+            - .\mosquitto\log:/mosquitto/log
+            - .\mosquitto\data:/mosquitto/data
         restart: always
         networks:
             - iotstack
@@ -40,8 +39,8 @@ services:
             - '8125:8125'
         restart: always
         volumes:
-            - ./certs/telegraf:/etc/telegraf
-            - ./telegraf/telegraf.toml:/etc/telegraf/telegraf.conf:ro
+            - .\certs\mqtt:/etc/telegraf
+            - .\telegraf\telegraf.toml:/etc/telegraf/telegraf.conf:ro
         networks:
             - iotstack
 
@@ -55,7 +54,6 @@ services:
             - influxdb
         volumes:
             - grafana_data:/var/lib/grafana
-            - ./certs/grafana:/etc/ssl/certs
         networks:
             - iotstack
 
