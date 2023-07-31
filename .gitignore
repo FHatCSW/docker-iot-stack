@@ -1,1 +1,2 @@
-./certs/*
+./certs/mqtt/certs_issued/*
+/venv/
