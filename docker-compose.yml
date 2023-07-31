@@ -54,6 +54,7 @@ services:
             - influxdb
         volumes:
             - grafana_data:/var/lib/grafana
+        command: [ "sh", "-c", "grafana-cli admin reset-admin-password ${GF_SECURITY_ADMIN_PASSWORD} && /run.sh" ]
         networks:
             - iotstack
 
